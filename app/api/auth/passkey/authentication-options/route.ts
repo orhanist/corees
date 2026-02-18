@@ -39,11 +39,19 @@ export async function POST(request: Request) {
   const options = await generateAuthenticationOptions({
     rpID: env.AUTH_WEBAUTHN_RP_ID,
     userVerification: "required",
-    allowCredentials: user.passkeys.map((credential) => ({
-      id: base64UrlToBytes(credential.credentialId),
-      type: "public-key",
-      transports: credential.transports as ("ble" | "hybrid" | "internal" | "nfc" | "usb")[],
-    })),
+    allowCredentials: user.passkeys.map((credential) => {
+      let transports: ("ble" | "hybrid" | "internal" | "nfc" | "usb")[] = [];
+      try {
+        transports = credential.transports ? JSON.parse(credential.transports) : [];
+      } catch {
+        transports = [];
+      }
+      return {
+        id: base64UrlToBytes(credential.credentialId),
+        type: "public-key",
+        transports,
+      };
+    }),
   });
 
   await prisma.user.update({

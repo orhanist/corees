@@ -36,11 +36,19 @@ export async function POST() {
       residentKey: "preferred",
       userVerification: "required",
     },
-    excludeCredentials: user.passkeys.map((credential) => ({
-      id: base64UrlToBytes(credential.credentialId),
-      type: "public-key",
-      transports: credential.transports as ("ble" | "hybrid" | "internal" | "nfc" | "usb")[],
-    })),
+    excludeCredentials: user.passkeys.map((credential) => {
+      let transports: ("ble" | "hybrid" | "internal" | "nfc" | "usb")[] = [];
+      try {
+        transports = credential.transports ? JSON.parse(credential.transports) : [];
+      } catch {
+        transports = [];
+      }
+      return {
+        id: base64UrlToBytes(credential.credentialId),
+        type: "public-key",
+        transports,
+      };
+    }),
   });
 
   await prisma.user.update({

@@ -34,7 +34,15 @@ export default async function EventsPage() {
       },
     });
 
-    serialized = events.map((event) => ({
+    serialized = events.map((event: {
+      id: string;
+      title: string;
+      slug: string;
+      date: Date;
+      location: string;
+      description: string;
+      highlightImage: string | null;
+    }) => ({
       ...event,
       date: event.date.toISOString(),
     }));

@@ -97,12 +97,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
 
           const assertion = JSON.parse(passkeyAssertion) as Parameters<typeof verifyAuthenticationResponse>[0]["response"];
-          const authenticators: AuthenticatorDevice[] = user.passkeys.map((credential) => ({
-            credentialID: base64ToUint8Array(credential.credentialId),
-            credentialPublicKey: base64ToUint8Array(credential.credentialPublicKey),
-            counter: credential.counter,
-            transports: credential.transports as ("ble" | "hybrid" | "internal" | "nfc" | "usb")[],
-          }));
+          const authenticators: AuthenticatorDevice[] = user.passkeys.map((credential) => {
+            let transports: ("ble" | "hybrid" | "internal" | "nfc" | "usb")[] = [];
+            try {
+              transports = credential.transports ? JSON.parse(credential.transports) : [];
+            } catch {
+              transports = [];
+            }
+            return {
+              credentialID: base64ToUint8Array(credential.credentialId),
+              credentialPublicKey: base64ToUint8Array(credential.credentialPublicKey),
+              counter: credential.counter,
+              transports,
+            };
+          });
           const matchingAuthenticator = authenticators.find(
             (credential) => Buffer.from(credential.credentialID).toString("base64url") === assertion.id
           );

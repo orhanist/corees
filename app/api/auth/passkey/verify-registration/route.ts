@@ -49,6 +49,8 @@ export async function POST(request: Request) {
 
   const credentialId = Buffer.from(verification.registrationInfo.credentialID).toString("base64url");
   const credentialPublicKey = verification.registrationInfo.credentialPublicKey;
+  const transportsArray = parsed.data.response.response.transports ?? [];
+  const transportsJson = JSON.stringify(transportsArray);
 
   await prisma.passkeyCredential.upsert({
     where: { credentialId },
@@ -57,7 +59,7 @@ export async function POST(request: Request) {
       counter: verification.registrationInfo.counter,
       deviceType: verification.registrationInfo.credentialDeviceType,
       backedUp: verification.registrationInfo.credentialBackedUp,
-      transports: parsed.data.response.response.transports ?? [],
+      transports: transportsJson,
     },
     create: {
       userId: session.user.id,
@@ -66,7 +68,7 @@ export async function POST(request: Request) {
       counter: verification.registrationInfo.counter,
       deviceType: verification.registrationInfo.credentialDeviceType,
       backedUp: verification.registrationInfo.credentialBackedUp,
-      transports: parsed.data.response.response.transports ?? [],
+      transports: transportsJson,
     },
   });
 

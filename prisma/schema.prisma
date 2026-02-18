@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -58,7 +58,7 @@ model Event {
   location       String
   description    String   @db.Text
   highlightImage String?
-  mediaUrls      String[]
+  mediaUrls      String?  @db.Text
   published      Boolean  @default(false)
   showOnCalendar Boolean  @default(false)
   createdAt      DateTime @default(now())
@@ -95,7 +95,7 @@ model PasskeyCredential {
   credentialId        String   @unique
   credentialPublicKey String
   counter             Int      @default(0)
-  transports          String[]
+  transports          String?  @db.Text
   deviceType          String?
   backedUp            Boolean?
   createdAt           DateTime @default(now())

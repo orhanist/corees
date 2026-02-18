@@ -21,7 +21,7 @@ function getNumberEnv(name: string, fallback: number): number {
 }
 
 export const env = {
-  DATABASE_URL: getRequiredEnv("DATABASE_URL", "postgres://local/dev"),
+  DATABASE_URL: getRequiredEnv("DATABASE_URL", "mysql://root:password@localhost:3306/corees"),
   AUTH_SECRET: getRequiredEnv("AUTH_SECRET", "dev-only-auth-secret-not-for-production"),
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST ?? "false",
