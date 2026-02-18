@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { format } from "date-fns";
+import { format, subDays } from "date-fns";
+import { DatePicker } from "./DatePicker";
 
 type EventCard = {
   id: string;
@@ -16,6 +17,8 @@ type EventCard = {
 
 type EventsGridProps = {
   events: EventCard[];
+  /** When false, title and description are omitted (e.g. when using ContentPageLayout). */
+  showHeader?: boolean;
 };
 
 function stripHtml(input: string) {
@@ -28,7 +31,15 @@ function buildExcerpt(html: string, maxLength = 200) {
   return clean.slice(0, maxLength).trimEnd() + "…";
 }
 
-export function EventsGrid({ events }: EventsGridProps) {
+function SearchIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  );
+}
+
+export function EventsGrid({ events, showHeader = true }: EventsGridProps) {
   const [query, setQuery] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -52,54 +63,108 @@ export function EventsGrid({ events }: EventsGridProps) {
     });
   }, [events, query, fromDate, toDate]);
 
+  const hasActiveFilters = Boolean(query || fromDate || toDate);
+  const clearFilters = () => {
+    setQuery("");
+    setFromDate("");
+    setToDate("");
+  };
+
+  const setLast7Days = () => {
+    const today = new Date();
+    setFromDate(format(subDays(today, 7), "yyyy-MM-dd"));
+    setToDate(format(today, "yyyy-MM-dd"));
+  };
+  const setLast30Days = () => {
+    const today = new Date();
+    setFromDate(format(subDays(today, 30), "yyyy-MM-dd"));
+    setToDate(format(today, "yyyy-MM-dd"));
+  };
+
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-16">
-      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
+    <section className="w-full">
+      {showHeader && (
+        <div className="mb-6">
           <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">Events</h1>
           <p className="mt-2 max-w-2xl text-sm text-slate-600 dark:text-slate-300">
             Browse past and upcoming CORE events. Use the search and date filters to quickly find what you&apos;re
             looking for.
           </p>
         </div>
+      )}
 
-        <div className="flex w-full flex-col gap-2 md:w-auto md:flex-row md:items-center md:gap-3">
-          <input
-            type="search"
-            placeholder="Search by title, location, or description"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            className="w-full rounded-full border border-slate-300 px-4 py-2 text-sm outline-none ring-0 focus:border-[var(--primary)] dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 md:w-64"
-          />
-          <div className="flex gap-2 text-xs text-slate-600 dark:text-slate-300">
-            <div className="flex items-center gap-1">
-              <span className="hidden md:inline">From</span>
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-5">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+            <div className="relative flex-1 min-w-0">
+              <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500">
+                <SearchIcon className="h-5 w-5" />
+              </span>
               <input
-                type="date"
+                type="search"
+                placeholder="Search by title, location, or description"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="h-11 w-full rounded-xl border border-slate-300 bg-slate-50/50 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-500 focus:border-[var(--primary)] focus:bg-white focus:ring-2 focus:ring-[var(--primary)]/20 dark:border-slate-600 dark:bg-slate-800/50 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-900 dark:focus:ring-[var(--primary)]/20"
+                aria-label="Search events"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <DatePicker
+                id="events-from"
+                label="From"
                 value={fromDate}
-                onChange={(event) => setFromDate(event.target.value)}
-                className="rounded-full border border-slate-300 px-3 py-1 text-xs outline-none ring-0 focus:border-[var(--primary)] dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+                onChange={setFromDate}
+                placeholder="Select date"
               />
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="hidden md:inline">To</span>
-              <input
-                type="date"
+              <DatePicker
+                id="events-to"
+                label="To"
                 value={toDate}
-                onChange={(event) => setToDate(event.target.value)}
-                className="rounded-full border border-slate-300 px-3 py-1 text-xs outline-none ring-0 focus:border-[var(--primary)] dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+                onChange={setToDate}
+                placeholder="Select date"
               />
             </div>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-3 dark:border-slate-700">
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={setLast7Days}
+                className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+              >
+                Last 7 days
+              </button>
+              <button
+                type="button"
+                onClick={setLast30Days}
+                className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+              >
+                Last 30 days
+              </button>
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="rounded-lg px-3 py-1.5 text-xs font-medium text-[var(--primary)] transition hover:bg-[var(--primary)]/10"
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              {filtered.length} {filtered.length === 1 ? "event" : "events"}
+            </p>
           </div>
         </div>
       </div>
 
       {filtered.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+        <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-10 text-center text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
           No events match your filters yet. Try clearing the search or date range.
         </div>
       ) : (
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((event) => (
             <article
               key={event.id}

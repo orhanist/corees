@@ -12,7 +12,7 @@ export function HeroSection() {
       <div className="relative mx-auto grid min-h-[560px] w-full max-w-7xl items-center gap-8 px-4 py-14 lg:grid-cols-[1.15fr_1fr]">
         <div className="text-white">
           <h1 className="max-w-3xl text-5xl font-bold leading-tight md:text-7xl">
-            Empowering Bright <span className="text-[var(--accent)]">Futures</span>
+            Empowering Bright <span className="text-white">Futures</span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/95 md:text-xl">
             CORE Educational Services is a nonprofit organization supporting youth academically, socially, and

@@ -1,11 +1,9 @@
+import { ContentPageLayout } from "@/components/public/ContentPageLayout";
+
 export default function PrivacyPage() {
   return (
-    <section className="bg-[var(--surface)] py-16">
-      <div className="mx-auto w-full max-w-5xl px-4">
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">Privacy Policy</h1>
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Last updated: February 18, 2026</p>
-
-        <div className="mt-8 space-y-7 rounded-2xl bg-white p-8 text-sm leading-7 text-slate-700 shadow-sm dark:bg-slate-900 dark:text-slate-300">
+    <ContentPageLayout title="Privacy Policy" lead="Last updated: February 18, 2026" width="narrow">
+      <div className="space-y-7 rounded-2xl bg-white p-8 text-sm leading-7 text-slate-700 shadow-sm dark:bg-slate-900 dark:text-slate-300">
           <p>
             CORE Educational Services respects your privacy. This policy describes how we collect, use, disclose, and
             protect personal information through our website and related program forms.
@@ -108,7 +106,6 @@ export default function PrivacyPage() {
             legal counsel for final production use.
           </p>
         </div>
-      </div>
-    </section>
+    </ContentPageLayout>
   );
 }

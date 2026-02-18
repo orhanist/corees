@@ -1,5 +1,14 @@
 # Hostinger VPS Deployment (Hardened)
 
+## Frontend-only release (current sprint)
+
+To publish the site for **public viewing only** (admin in a later sprint):
+
+1. Set in your deployment environment (e.g. Hostinger env vars or `.env.production`):
+   - `PUBLIC_SITE_ONLY=true`
+2. Do **not** commit `.env`, `.env.local`, or `.env.production` (they are in `.gitignore`).
+3. With `PUBLIC_SITE_ONLY=true`, all `/admin` and `/auth` routes redirect to the home page; `/api/admin` and `/api/auth` return 404. No admin or auth surface is exposed.
+
 ## 1) Server baseline
 - Use Ubuntu 22.04+ VPS.
 - Create non-root deploy user with sudo privileges.

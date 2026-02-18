@@ -1,22 +1,16 @@
 import Link from "next/link";
+import { ContentPageLayout } from "@/components/public/ContentPageLayout";
 
 export default function CoreCareScholarshipPage() {
   return (
-    <section className="bg-[#f2f4f8] py-16 dark:bg-[var(--surface)]">
-      <div className="mx-auto w-full max-w-6xl px-4">
-        <Link href="/registration" className="text-sm font-medium text-[var(--accent)] hover:underline">
-          Back to Registration
-        </Link>
-        <h1 className="mt-4 text-3xl font-bold text-slate-900 dark:text-slate-100">
-          Core Educational Services CoreCare Scholarship Application Form (2025-26)
-        </h1>
-        <p className="mt-4 text-sm leading-7 text-slate-700 dark:text-slate-300">
-          Thank you for your interest in the CORE EDUCATIONAL SERVICES CORE CARE STUDENT FUND SCHOLARSHIP program.
-          Please fill out this application form completely. Falsifications, misrepresentations, or omissions may
-          disqualify your application. Information you provide will not be given to any other person/company. Unsigned
-          or incomplete applications may not be considered for acceptance.
-        </p>
-        <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <ContentPageLayout
+      title="CoreCare Scholarship Application (2025-26)"
+      lead="Thank you for your interest in the CORE EDUCATIONAL SERVICES CORE CARE STUDENT FUND SCHOLARSHIP program. Please fill out this application form completely. Falsifications, misrepresentations, or omissions may disqualify your application. Information you provide will not be given to any other person/company. Unsigned or incomplete applications may not be considered for acceptance."
+    >
+      <Link href="/registration" className="text-sm font-medium text-[var(--accent)] hover:underline">
+        ← Back to Registration
+      </Link>
+      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Eligibility & Requirements</h2>
           <ol className="mt-3 list-decimal space-y-3 pl-5 text-sm leading-7 text-slate-700 dark:text-slate-300">
             <li>
@@ -119,7 +113,6 @@ export default function CoreCareScholarshipPage() {
             Submit
           </button>
         </form>
-      </div>
-    </section>
+    </ContentPageLayout>
   );
 }

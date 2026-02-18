@@ -1,18 +1,13 @@
 import Image from "next/image";
+import { ContentPageLayout } from "@/components/public/ContentPageLayout";
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#f2f4f8] dark:bg-[var(--surface)]">
-      <section className="mx-auto w-full max-w-7xl px-4 py-16">
-        <h1 className="text-5xl font-bold text-slate-900 dark:text-slate-100">About CORE Educational Services</h1>
-        <p className="mt-5 max-w-5xl text-lg leading-8 text-slate-700 dark:text-slate-300">
-          CORE Educational Services is a nonprofit organization that has provided youth educational and academic support
-          services since 2017. We serve the community through member donations and community collaboration, helping
-          students grow socially, academically, and spiritually through programs and events year-round.
-        </p>
-      </section>
-
-      <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 pb-8 md:grid-cols-2">
+    <ContentPageLayout
+      title="About CORE Educational Services"
+      lead="CORE Educational Services is a nonprofit organization that has provided youth educational and academic support services since 2017. We serve the community through member donations and community collaboration, helping students grow socially, academically, and spiritually through programs and events year-round."
+    >
+      <section className="grid gap-6 md:grid-cols-2">
         <article className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-900">
           <h2 className="text-2xl font-semibold text-[var(--primary)]">Our Service Area</h2>
           <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
@@ -38,7 +33,7 @@ export default function AboutPage() {
         </article>
       </section>
 
-      <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-8 md:grid-cols-2">
+      <section className="grid gap-6 py-8 md:grid-cols-2">
         <article className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-900">
           <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100">Mission</h2>
           <p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">
@@ -55,7 +50,7 @@ export default function AboutPage() {
         </article>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-4 pb-16">
+      <section className="pb-4">
         <div className="grid gap-6 md:grid-cols-[1.05fr_0.95fr]">
           <article className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-900">
             <h2 className="text-2xl font-semibold text-[var(--primary)]">What We Organize</h2>
@@ -76,6 +71,6 @@ export default function AboutPage() {
           </article>
         </div>
       </section>
-    </div>
+    </ContentPageLayout>
   );
 }

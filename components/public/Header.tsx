@@ -22,14 +22,6 @@ const navLinks = [
   { label: "Contact Us", href: "/contact" },
 ];
 
-function XBrandIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
-      <path d="M17.53 3H21l-7.58 8.67L22.3 21h-6.96l-5.45-6.25L4.42 21H1l8.1-9.26L1.7 3h7.06l4.92 5.65L17.53 3Zm-1.22 15.91h1.92L7.72 5H5.67l10.64 13.91Z" />
-    </svg>
-  );
-}
-
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -45,7 +37,7 @@ export function Header() {
             className="h-12 w-12 rounded-sm object-contain"
           />
           <div className="leading-tight">
-            <p className="text-2xl font-semibold tracking-tight text-[var(--accent)]">CORE EDUCATIONAL SERVICES</p>
+            <p className="text-2xl font-semibold tracking-tight text-[var(--primary)]">CORE EDUCATIONAL SERVICES</p>
             <p className="text-sm font-medium text-[var(--primary)]">For Next Generation</p>
           </div>
         </Link>
@@ -56,7 +48,7 @@ export function Header() {
               <div key={link.label} className="group relative">
                 <Link
                   href={link.href}
-                  className="inline-flex items-center gap-1 text-base font-medium text-slate-700 transition-colors hover:text-[var(--accent)] dark:text-slate-200"
+                  className="inline-flex items-center gap-1 text-base font-medium text-slate-700 transition-colors hover:text-[var(--primary)] dark:text-slate-200"
                 >
                   {link.label}
                   <ChevronDown size={14} />
@@ -66,7 +58,7 @@ export function Header() {
                     <Link
                       key={child.href}
                       href={child.href}
-                      className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-[var(--accent)] dark:text-slate-200 dark:hover:bg-slate-800"
+                      className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-[var(--primary)] dark:text-slate-200 dark:hover:bg-slate-800"
                     >
                       {child.label}
                     </Link>
@@ -77,7 +69,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-base font-medium text-slate-700 transition-colors hover:text-[var(--accent)] dark:text-slate-200"
+                className="text-base font-medium text-slate-700 transition-colors hover:text-[var(--primary)] dark:text-slate-200"
               >
                 {link.label}
               </Link>
@@ -85,7 +77,7 @@ export function Header() {
           )}
           <Link
             href="/donate"
-            className="rounded-full border border-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--accent)] transition hover:bg-[var(--accent)] hover:text-white"
+            className="rounded-full bg-[var(--primary)] px-4 py-2 text-sm font-semibold !text-white transition hover:bg-[var(--primary-light)] hover:!text-white"
           >
             Donation
           </Link>
@@ -95,14 +87,16 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)] dark:border-slate-600 dark:text-slate-200"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-[var(--primary)] hover:text-[var(--primary)] dark:border-slate-600 dark:text-slate-200"
             >
               <Instagram size={13} />
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/CoreEducationVA"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Facebook"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)] dark:border-slate-600 dark:text-slate-200"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-[var(--primary)] hover:text-[var(--primary)] dark:border-slate-600 dark:text-slate-200"
             >
               <Facebook size={13} />
             </a>
@@ -111,18 +105,9 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)] dark:border-slate-600 dark:text-slate-200"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-[var(--primary)] hover:text-[var(--primary)] dark:border-slate-600 dark:text-slate-200"
             >
               <Linkedin size={13} />
-            </a>
-            <a
-              href="https://x.com/corees_va"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)] dark:border-slate-600 dark:text-slate-200"
-            >
-              <XBrandIcon size={13} />
             </a>
           </div>
         </nav>
@@ -155,7 +140,7 @@ export function Header() {
                       key={child.href}
                       href={child.href}
                       onClick={() => setMobileOpen(false)}
-                      className="rounded-md py-1 text-xs text-slate-600 hover:text-[var(--accent)]"
+                      className="rounded-md py-1 text-xs text-slate-600 hover:text-[var(--primary)]"
                     >
                       {child.label}
                     </Link>
@@ -176,7 +161,7 @@ export function Header() {
           <Link
             href="/donate"
             onClick={() => setMobileOpen(false)}
-            className="mt-2 rounded-md bg-[var(--accent)] px-2 py-2 text-center text-sm font-semibold text-white"
+            className="mt-2 rounded-md bg-[var(--primary)] px-2 py-2 text-center text-sm font-semibold !text-white"
           >
             Donation
           </Link>
@@ -186,14 +171,16 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 transition hover:border-[var(--accent)] hover:text-[var(--accent)] dark:border-slate-600"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 transition hover:border-[var(--primary)] hover:text-[var(--primary)] dark:border-slate-600"
             >
               <Instagram size={13} />
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/CoreEducationVA"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Facebook"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 transition hover:border-[var(--accent)] hover:text-[var(--accent)] dark:border-slate-600"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 transition hover:border-[var(--primary)] hover:text-[var(--primary)] dark:border-slate-600"
             >
               <Facebook size={13} />
             </a>
@@ -202,18 +189,9 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 transition hover:border-[var(--accent)] hover:text-[var(--accent)] dark:border-slate-600"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 transition hover:border-[var(--primary)] hover:text-[var(--primary)] dark:border-slate-600"
             >
               <Linkedin size={13} />
-            </a>
-            <a
-              href="https://x.com/corees_va"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-300 transition hover:border-[var(--accent)] hover:text-[var(--accent)] dark:border-slate-600"
-            >
-              <XBrandIcon size={13} />
             </a>
           </div>
         </nav>

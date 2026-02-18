@@ -2,14 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 
-function XBrandIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true">
-      <path d="M17.53 3H21l-7.58 8.67L22.3 21h-6.96l-5.45-6.25L4.42 21H1l8.1-9.26L1.7 3h7.06l4.92 5.65L17.53 3Zm-1.22 15.91h1.92L7.72 5H5.67l10.64 13.91Z" />
-    </svg>
-  );
-}
-
 export function Footer() {
   return (
     <footer className="bg-[#0c1830] text-white">
@@ -37,17 +29,19 @@ export function Footer() {
         </div>
         <div className="md:justify-self-end">
           <h4 className="text-sm font-semibold uppercase tracking-wide text-white/90">Contact</h4>
-          <a
-            href="https://share.google/F8zgB1qb7O0szOSms"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 block text-sm text-white/80 underline-offset-2 transition hover:text-white hover:underline"
-          >
-            14120 Newbrook Dr Suite 200, Chantilly, VA 20151
-          </a>
-          <a href="mailto:info@core-es.org" className="text-sm text-white/80 underline-offset-2 transition hover:text-white hover:underline">
-            info@core-es.org
-          </a>
+          <div className="mt-2 flex flex-col gap-2">
+            <a
+              href="https://share.google/F8zgB1qb7O0szOSms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-sm text-white/80 underline-offset-2 transition hover:text-white hover:underline"
+            >
+              14120 Newbrook Dr Suite 200, Chantilly, VA 20151
+            </a>
+            <a href="mailto:info@core-es.org" className="text-sm text-white/80 underline-offset-2 transition hover:text-white hover:underline">
+              info@core-es.org
+            </a>
+          </div>
           <div className="mt-3 flex items-center gap-2">
             <a
               href="https://instagram.com/corees_va"
@@ -59,7 +53,9 @@ export function Footer() {
               <Instagram size={13} />
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/CoreEducationVA"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Facebook"
               className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/30 text-white/85 transition hover:border-white hover:text-white"
             >
@@ -74,34 +70,25 @@ export function Footer() {
             >
               <Linkedin size={13} />
             </a>
-            <a
-              href="https://x.com/corees_va"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/30 text-white/85 transition hover:border-white hover:text-white"
-            >
-              <XBrandIcon size={13} />
-            </a>
           </div>
         </div>
       </div>
       <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-center gap-3 px-4 pb-2">
         <Link
           href="/terms"
-          className="inline-flex rounded-md border border-[var(--accent)] px-2.5 py-1 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent)] hover:text-[#0c1830]"
+          className="inline-flex rounded-full border border-[var(--primary)] bg-[var(--primary)] px-4 py-2 text-xs font-medium text-white transition hover:opacity-90"
         >
           Terms & Conditions
         </Link>
         <Link
           href="/privacy"
-          className="inline-flex rounded-md border border-[var(--accent)] px-2.5 py-1 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent)] hover:text-[#0c1830]"
+          className="inline-flex rounded-full border border-[var(--primary)] bg-[var(--primary)] px-4 py-2 text-xs font-medium text-white transition hover:opacity-90"
         >
           Privacy Policy
         </Link>
         <Link
           href="/refund"
-          className="inline-flex rounded-md border border-[var(--accent)] px-2.5 py-1 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent)] hover:text-[#0c1830]"
+          className="inline-flex rounded-full border border-[var(--primary)] bg-[var(--primary)] px-4 py-2 text-xs font-medium text-white transition hover:opacity-90"
         >
           Refund Policy
         </Link>

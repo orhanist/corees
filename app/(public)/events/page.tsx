@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { ContentPageLayout } from "@/components/public/ContentPageLayout";
 import { EventsGrid } from "@/components/public/EventsGrid";
 
 export default async function EventsPage() {
@@ -41,6 +42,13 @@ export default async function EventsPage() {
     serialized = [];
   }
 
-  return <EventsGrid events={serialized} />;
+  return (
+    <ContentPageLayout
+      title="Events"
+      lead="Browse past and upcoming CORE events. Use the search and date filters to quickly find what you're looking for."
+    >
+      <EventsGrid events={serialized} showHeader={false} />
+    </ContentPageLayout>
+  );
 }
 

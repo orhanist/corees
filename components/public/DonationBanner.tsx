@@ -18,7 +18,7 @@ export function DonationBanner() {
         </div>
         <Link
           href="/donate"
-          className="rounded-full bg-[var(--accent-warm)] px-8 py-4 text-base font-extrabold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f3ab3c] hover:text-white"
+          className="rounded-full bg-[var(--accent-warm)] px-8 py-4 text-base font-extrabold !text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#f3ab3c] hover:!text-white"
         >
           Donate Now
         </Link>

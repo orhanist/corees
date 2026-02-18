@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ContentPageLayout } from "@/components/public/ContentPageLayout";
 
 const paymentOptions = [
   { label: "Donate via Zelle", href: "#" },
@@ -12,20 +13,20 @@ const paymentOptions = [
 
 export default function DonatePage() {
   return (
-    <section className="bg-[var(--surface)] py-16">
-      <div className="mx-auto w-full max-w-6xl px-4">
-        <h1 className="text-4xl font-bold text-[var(--primary)]">Donate</h1>
-        <p className="mt-4 max-w-4xl text-sm leading-7 text-slate-700">
+    <ContentPageLayout
+      title="Donate"
+      lead={
+        <>
           CORE Educational Services is a nonprofit organization and recognized as tax-exempt under applicable federal
           law. Donations may be tax-deductible to the extent permitted by law. Please keep your donation receipt for
           your records.
-        </p>
-        <p className="mt-2 max-w-4xl text-sm leading-7 text-slate-700">
+          <br />
           Choose a payment option below. Each button will redirect to the corresponding secure donation method once
           final links are added.
-        </p>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        </>
+      }
+    >
+      <div className="grid gap-5 md:grid-cols-2">
           {paymentOptions.map((option) => (
             <Link
               key={option.label}
@@ -42,8 +43,7 @@ export default function DonatePage() {
               <span className="text-2xl font-semibold leading-tight text-white">{option.label}</span>
             </Link>
           ))}
-        </div>
       </div>
-    </section>
+    </ContentPageLayout>
   );
 }

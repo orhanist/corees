@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { format } from "date-fns";
 import { prisma } from "@/lib/prisma";
+import { ContentPageLayout } from "@/components/public/ContentPageLayout";
 
 type EventPageProps = {
   params: Promise<{ slug: string }>;
@@ -26,8 +27,23 @@ export default async function EventDetailPage({ params }: EventPageProps) {
     notFound();
   }
 
+  const dateStr = format(new Date(event.date), "EEE, MMM d, yyyy");
+
   return (
-    <section className="mx-auto w-full max-w-4xl px-4 py-16">
+    <ContentPageLayout
+      title={event.title}
+      lead={
+        <>
+          <span className="font-semibold text-[var(--accent)]">{dateStr}</span>
+          {event.location && (
+            <>
+              {" · "}
+              <span>{event.location}</span>
+            </>
+          )}
+        </>
+      }
+    >
       <div className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent)]">
         <Link href="/events" className="hover:underline">
           Events
@@ -35,15 +51,8 @@ export default async function EventDetailPage({ params }: EventPageProps) {
         / Detail
       </div>
 
-      <p className="text-sm font-semibold uppercase tracking-wide text-[var(--accent)]">
-        {format(new Date(event.date), "EEE, MMM d, yyyy")}
-      </p>
-      <h1 className="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">{event.title}</h1>
-      <p className="mt-2 text-sm font-medium text-slate-700 dark:text-slate-300">{event.location}</p>
-
       {event.highlightImage ? (
-        <div className="mt-6 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
-          {/* You can swap this to a Next/Image when storing real images */}
+        <div className="mt-4 overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
           <img src={event.highlightImage} alt={event.title} className="h-64 w-full object-cover" />
         </div>
       ) : null}
@@ -60,7 +69,7 @@ export default async function EventDetailPage({ params }: EventPageProps) {
           ← Back to all events
         </Link>
       </div>
-    </section>
+    </ContentPageLayout>
   );
 }
 

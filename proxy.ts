@@ -3,8 +3,20 @@ import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { env } from "@/lib/env";
 
+const PUBLIC_SITE_ONLY = process.env.PUBLIC_SITE_ONLY === "true";
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (PUBLIC_SITE_ONLY) {
+    if (pathname.startsWith("/admin") || pathname.startsWith("/auth")) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+    if (pathname.startsWith("/api/admin") || pathname.startsWith("/api/auth")) {
+      return NextResponse.json({ error: "Not available" }, { status: 404 });
+    }
+    return NextResponse.next();
+  }
 
   const token = await getToken({
     req: request,
@@ -31,5 +43,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*", "/auth/:path*", "/api/auth/:path*"],
 };
