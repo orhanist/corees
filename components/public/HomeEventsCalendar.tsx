@@ -8,7 +8,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
-import { getHomeCalendarEvents } from "@/lib/events";
+import { getHomeCalendarData } from "@/lib/events";
 
 type CalendarCellEvent = {
   id: string;
@@ -21,8 +21,8 @@ function stripHtml(input: string) {
 }
 
 export async function HomeEventsCalendar() {
-  const events = await getHomeCalendarEvents();
-  const baseDate = events.length > 0 ? new Date(events[0].date) : new Date();
+  const { anchorDate, events } = await getHomeCalendarData();
+  const baseDate = new Date(anchorDate);
   const monthStart = startOfMonth(baseDate);
   const gridStart = startOfWeek(monthStart, { weekStartsOn: 0 });
   const monthEnd = endOfMonth(baseDate);

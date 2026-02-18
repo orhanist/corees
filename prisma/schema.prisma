@@ -26,14 +26,26 @@ model AllowedEmail {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  image     String?
-  role      Role     @default(COORDINATOR)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  events    Event[]
+  id                      String             @id @default(cuid())
+  email                   String             @unique
+  name                    String?
+  image                   String?
+  role                    Role               @default(COORDINATOR)
+  passwordHash            String?
+  passwordSetupAt         DateTime?
+  failedLoginCount        Int                @default(0)
+  lockedUntil             DateTime?
+  lastLoginAt             DateTime?
+  currentChallenge        String?
+  currentChallengeExpires DateTime?
+  mfaRequired             Boolean            @default(true)
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+  events                  Event[]
+  createdInvites          AdminInvite[]      @relation("InviteCreator")
+  acceptedInvites         AdminInvite[]      @relation("InviteAcceptor")
+  passkeys                PasskeyCredential[]
+  auditLogs               AdminAuditLog[]
 
   @@map("users")
 }
@@ -55,6 +67,58 @@ model Event {
   author         User     @relation(fields: [authorId], references: [id])
 
   @@map("events")
+}
+
+model AdminInvite {
+  id          String    @id @default(cuid())
+  email       String
+  role        Role      @default(COORDINATOR)
+  tokenHash   String    @unique
+  expiresAt   DateTime
+  acceptedAt  DateTime?
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  createdById String
+  createdBy   User      @relation("InviteCreator", fields: [createdById], references: [id])
+  acceptedById String?
+  acceptedBy   User?     @relation("InviteAcceptor", fields: [acceptedById], references: [id])
+
+  @@index([email, expiresAt])
+  @@index([createdById])
+  @@map("admin_invites")
+}
+
+model PasskeyCredential {
+  id                  String   @id @default(cuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialId        String   @unique
+  credentialPublicKey String
+  counter             Int      @default(0)
+  transports          String[]
+  deviceType          String?
+  backedUp            Boolean?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  lastUsedAt          DateTime?
+
+  @@index([userId])
+  @@map("passkey_credentials")
+}
+
+model AdminAuditLog {
+  id        String   @id @default(cuid())
+  actorId   String
+  actor     User     @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  action    String
+  targetId  String?
+  metadata  String?  @db.Text
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
+  @@map("admin_audit_logs")
 }
 
 model SummerCampRegistration {
