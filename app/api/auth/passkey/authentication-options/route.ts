@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   const options = await generateAuthenticationOptions({
     rpID: env.AUTH_WEBAUTHN_RP_ID,
     userVerification: "required",
-    allowCredentials: user.passkeys.map((credential) => {
+    allowCredentials: user.passkeys.map((credential: { credentialId: string; transports: string | null }) => {
       let transports: ("ble" | "hybrid" | "internal" | "nfc" | "usb")[] = [];
       try {
         transports = credential.transports ? JSON.parse(credential.transports) : [];

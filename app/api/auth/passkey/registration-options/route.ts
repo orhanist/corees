@@ -36,7 +36,7 @@ export async function POST() {
       residentKey: "preferred",
       userVerification: "required",
     },
-    excludeCredentials: user.passkeys.map((credential) => {
+    excludeCredentials: user.passkeys.map((credential: { credentialId: string; transports: string | null }) => {
       let transports: ("ble" | "hybrid" | "internal" | "nfc" | "usb")[] = [];
       try {
         transports = credential.transports ? JSON.parse(credential.transports) : [];

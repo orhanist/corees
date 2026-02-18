@@ -97,7 +97,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
 
           const assertion = JSON.parse(passkeyAssertion) as Parameters<typeof verifyAuthenticationResponse>[0]["response"];
-          const authenticators: AuthenticatorDevice[] = user.passkeys.map((credential) => {
+          const authenticators: AuthenticatorDevice[] = user.passkeys.map((credential: { credentialId: string; credentialPublicKey: string; counter: number; transports: string | null }) => {
             let transports: ("ble" | "hybrid" | "internal" | "nfc" | "usb")[] = [];
             try {
               transports = credential.transports ? JSON.parse(credential.transports) : [];
