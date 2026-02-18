@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import type { Role } from "@prisma/client";
 import { verifyAuthenticationResponse } from "@simplewebauthn/server";
+import type { Role } from "@/types/role";
 import type { AuthenticatorDevice } from "@simplewebauthn/types";
 import { z } from "zod";
 import { env } from "@/lib/env";
